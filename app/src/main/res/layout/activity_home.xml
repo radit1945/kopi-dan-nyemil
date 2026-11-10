@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cream_bg"
@@ -50,7 +51,7 @@
             android:backgroundTint="@color/coffee_dark"
             android:text="Home"
             android:textColor="@color/white"
-            style="?attr/materialButtonOutlinedStyle" />
+            app:cornerRadius="8dp" />
 
         <Button
             android:id="@+id/btnNavOrder"
@@ -60,7 +61,9 @@
             android:backgroundTint="@color/white"
             android:text="Order"
             android:textColor="@color/text_dark"
-            style="?attr/materialButtonOutlinedStyle" />
+            app:strokeColor="@color/coffee_dark"
+            app:strokeWidth="1dp"
+            app:cornerRadius="8dp" />
 
         <Button
             android:id="@+id/btnNavProfile"
@@ -70,7 +73,9 @@
             android:backgroundTint="@color/white"
             android:text="Profile"
             android:textColor="@color/text_dark"
-            style="?attr/materialButtonOutlinedStyle" />
+            app:strokeColor="@color/coffee_dark"
+            app:strokeWidth="1dp"
+            app:cornerRadius="8dp" />
 
     </LinearLayout>
 
