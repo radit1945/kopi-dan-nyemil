@@ -60,7 +60,7 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRegisterSubmit"
         android:layout_width="match_parent"
         android:layout_height="56dp"

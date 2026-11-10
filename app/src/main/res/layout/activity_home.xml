@@ -43,7 +43,7 @@
         android:orientation="horizontal"
         android:elevation="8dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnNavHome"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:textColor="@color/white"
             app:cornerRadius="8dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnNavOrder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
             app:strokeWidth="1dp"
             app:cornerRadius="8dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnNavProfile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
