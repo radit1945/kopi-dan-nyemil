@@ -5,27 +5,34 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.google.android.material.textfield.TextInputEditText
 
 class ProfileActivity : AppCompatActivity() {
+
+    private val kopiViewModel: KopiViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
         val tvProfileHalo = findViewById<TextView>(R.id.tvProfileHalo)
-        tvProfileHalo.text = "Halo ${UserSession.nama},"
-
         val etProfileNama = findViewById<TextInputEditText>(R.id.etProfileNama)
-        etProfileNama.setText(UserSession.nama)
+
+        // Observe userName LiveData
+        kopiViewModel.userName.observe(this, Observer { name ->
+            tvProfileHalo.text = "Halo $name,"
+            etProfileNama.setText(name)
+        })
 
         val btnSaveProfile = findViewById<Button>(R.id.btnSaveProfile)
         btnSaveProfile.setOnClickListener {
             val newNama = etProfileNama.text.toString().trim()
             if (newNama.isNotEmpty()) {
-                UserSession.nama = newNama
-                tvProfileHalo.text = "Halo ${UserSession.nama},"
-                Toast.makeText(this, "Profile berhasil disimpan", Toast.LENGTH_SHORT).show()
+                kopiViewModel.updateUserName(newNama)
+                Toast.makeText(this, "Profile berhasil disimpan via ViewModel & LiveData", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Nama tidak boleh kosong", Toast.LENGTH_SHORT).show()
             }

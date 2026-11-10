@@ -4,26 +4,37 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class HomeActivity : AppCompatActivity() {
+
+    private val kopiViewModel: KopiViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
         val tvHaloNama = findViewById<TextView>(R.id.tvHaloNama)
-        tvHaloNama.text = "Halo ${UserSession.nama},"
-
         val rvFood = findViewById<RecyclerView>(R.id.rvFood)
         rvFood.layoutManager = LinearLayoutManager(this)
-        rvFood.adapter = FoodAdapter(DummyData.foodList) { food ->
-            // Clicking food goes to order
-            val intent = Intent(this, OrderActivity::class.java)
-            intent.putExtra("SELECTED_FOOD", food.name)
-            startActivity(intent)
-        }
+
+        // Observe userName LiveData
+        kopiViewModel.userName.observe(this, Observer { name ->
+            tvHaloNama.text = "Halo $name,"
+        })
+
+        // Observe foodList LiveData for the catalog
+        kopiViewModel.foodList.observe(this, Observer { list ->
+            rvFood.adapter = FoodAdapter(list) { food ->
+                val intent = Intent(this, OrderActivity::class.java)
+                intent.putExtra("SELECTED_FOOD", food.name)
+                startActivity(intent)
+            }
+        })
 
         val btnNavHome = findViewById<Button>(R.id.btnNavHome)
         val btnNavOrder = findViewById<Button>(R.id.btnNavOrder)
@@ -44,7 +55,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val tvHaloNama = findViewById<TextView>(R.id.tvHaloNama)
-        tvHaloNama.text = "Halo ${UserSession.nama},"
+        // Ensure ViewModel keeps synced with UserSession if modified elsewhere
+        kopiViewModel.updateUserName(UserSession.nama)
     }
 }
